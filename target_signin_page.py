@@ -17,4 +17,6 @@ driver.get('https://www.target.com/')
 driver.find_element(By.XPATH,"//span[text()='Account']").click()
 sleep(5)
 driver.find_element(By.XPATH,"//button[@data-test='accountNav-signIn']").click()
+expected_text = 'Sign in or create account'
+driver.find_element(By.XPATH,"//*[text()='Sign in or create account']")
 sleep(30)

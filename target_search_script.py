@@ -19,8 +19,8 @@ driver.find_element(By.ID,'search').send_keys('icecream')
 driver.find_element(By.XPATH,"//button[@data-test='@web/Search/SearchButton']").click()
 sleep(5)
 expected_text = 'icecream'
-actual_text = driver.find_element(By.XPATH,"//div[@data-test='lp-resultsCount']").text
-assert expected_text in actual_text
+Verify search worked
+Error,expected 'tea' not in actual {actual_text}"
 print('test case passed')
 driver.quit()
 
