@@ -18,9 +18,10 @@ driver.get('https://www.target.com/')
 driver.find_element(By.ID,'search').send_keys('icecream')
 driver.find_element(By.XPATH,"//button[@data-test='@web/Search/SearchButton']").click()
 sleep(5)
+actual_text = driver.find_element(By.CSS_SELECTOR, '.search-results').text
 expected_text = 'icecream'
-Verify search worked
-Error,expected 'tea' not in actual {actual_text}"
+icecream = "icecream"
+assert icecream in actual_text, f"Error, expected {icecream} not in actual {actual_text}"
 print('test case passed')
 driver.quit()
 
