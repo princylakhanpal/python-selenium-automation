@@ -2,28 +2,50 @@ from selenium.webdriver.common.by import By
 from behave import given, when, then
 from time import sleep
 
+SEARCH_FIELD = (By.ID, 'search')
+SEARCH_BTN = (By.XPATH, "//button[@data-test='@web/Search/SearchButton']")
+CART_ICON = (By.CSS_SELECTOR, "[data-test='@web/CartLink']")
+HEADER_LINKS = (By.CSS_SELECTOR, "[data-test*='@web/GlobalHeader/UtilityHeader/']")
+LISTINGS = (By.CSS_SELECTOR, "[data-test='@web/site-top-of-funnel/ProductCardWrapper']")
+PRODUCT_TITLE = (By.CSS_SELECTOR, "[data-test='product-title']")
+PRODUCT_IMG = (By.CSS_SELECTOR, 'img')
 
 @when('Search for {search_word}')
 def search_product(context, search_word):
-    context.driver.find_element(By.ID, 'search').send_keys(search_word)
-    context.driver.find_element(By.XPATH, "//button[@data-test='@web/Search/SearchButton']").click()
-    sleep(5)
+    context.driver.find_element(*SEARCH_FIELD).send_keys(search_word)
+    context.driver.find_element(*SEARCH_BTN).click()
+    sleep(10)
 
 @when('Click on Cart icon')
 def click_cart(context):
-    context.driver.find_element(By.CSS_SELECTOR, "[data-test='@web/CartLink']").click()
+    context.driver.find_element(*CART_ICON).click()
 
-@when('Click on Add to cart button')
-def click_add_to_cart(context):
-    context.driver.find_element(By.CSS_SELECTOR, "[id*='addToCartButton']").click()
+
+@then('Verify header has {number} links')
+def verify_header_links(context, number):
+    print(type(number))
+    links = context.driver.find_elements(By.CSS_SELECTOR, "[data-test*='@web/GlobalHeader/UtilityHeader/']")
+    links = context.driver.find_elements(*HEADER_LINKS)
+    print(links)
+
+    # 6 == 6
+    assert len(links) == int(number), f'Expected {number} links but got {len(links)}'
+
+
+@then('Verify that every product has a name and an image')
+def verify_products_name_img(context):
+    # To see ALL listings (comment out if you only check top ones):
+    context.driver.execute_script("window.scrollBy(0,2000)", "")
     sleep(2)
+    context.driver.execute_script("window.scrollBy(0,1000)", "")
+    # sleep(2)
 
-@when('Store product name')
-def store_product_name(context):
-    context.product_name = context.driver.find_element(By.CSS_SELECTOR, "[data-test='content-wrapper'] h4").text
-    print('Product name stored: ', context.product_name)
+    # If you ever need to scroll up, use negative numbers: context.driver.execute_script("window.scrollBy(0, -2000)", "")
 
+    products = context.driver.find_elements(*LISTINGS)  # [WebEl1, WebEl2, WebEl3, WebEl4]
 
-@when('Confirm add to Cart button from side navigation bar')
-def side_nav_click_add_to_cart(context):
-    context.driver.find_element(By.CSS_SELECTOR, "[class*='styles_contentWrapper'] button[id*='addToCartButton']").click()
+    for product in products[:8]:
+        title = product.find_element(*PRODUCT_TITLE).text
+        assert title, 'Product title not shown'
+        print(title)
+        product.find_element(*PRODUCT_IMG)

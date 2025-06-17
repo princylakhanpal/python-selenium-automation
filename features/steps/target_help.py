@@ -1,12 +1,12 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
 from behave import given, when, then
 from time import sleep
 
 @given('Open Target help page')
 def open_target_help_page(context):
     context.driver.get('https://help.target.com/help')
-    sleep(5)
-
+    context.driver.wait.until(EC.url_contains('help'))
 
 @then('Verify Help page has main header')
 def verify_main_header(context):
