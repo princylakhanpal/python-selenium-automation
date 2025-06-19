@@ -5,7 +5,7 @@ from time import sleep
 
 ADD_TO_CART_BTN = (By.CSS_SELECTOR, "[id*='addToCartButton']")
 SIDE_NAV_ADD_TO_CART_BTN = (By.CSS_SELECTOR, "[data-test='content-wrapper'] [id*='addToCart']")
-SEARCH_RESULTS_TXT = (By.XPATH, "//div[@data-test='lp-resultsCount']")
+SEARCH_RESULTS_TXT = (By.XPATH, "//div['@data-test='lp-resultsCount']")
 SIDE_NAV_PRODUCT_NAME = (By.CSS_SELECTOR, "[data-test='content-wrapper'] h4")
 
 
@@ -30,5 +30,6 @@ def side_nav_click_add_to_cart(context):
 
 @then('Verify search worked for {product}')
 def verify_search_results(context, product):
-    actual_text = context.driver.find_element(*SEARCH_RESULTS_TXT).text
-    assert product in actual_text, f"Error, expected {product} not in actual {actual_text}"
+   # actual_text = context.driver.find_element(*SEARCH_RESULTS_TXT).text
+    #assert product in actual_text, f"Error, expected {product} not in actual {actual_text}"
+    context.app.search_results_page.verify_search_results()
