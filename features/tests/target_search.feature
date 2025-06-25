@@ -19,3 +19,14 @@ Feature: Tests for Target Search
     When Click on Account
     And Click Sign in button
     Then Verify Sign in page opened
+
+
+  Scenario:   User can sign into their account
+    Given Open Target main page
+    When Click on Account
+    And Click Sign in button
+    And Input "auringonpistos@gmailot.com" in Email field
+    And Click Continue button
+    And Input "********" in Password field
+    And Click Sign in with Password button
+    Then Verify User is logged in

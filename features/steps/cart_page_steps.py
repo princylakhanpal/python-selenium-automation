@@ -11,8 +11,8 @@ def open_cart_page(context):
 def verify_cart_product_name(context):
      product_name_in_cart = context.driver.find_element(By.CSS_SELECTOR, "[data-test='cartItem-title']").text.strip()
      print('Name in cart:', product_name_in_cart)
-     assert context.product_name in product_name_in_cart
-     f'Expected context.product_name, not found in cart: "{product_name_in_cart}"'
+     assert context.product_name in product_name_in_cart, \
+     f'Expected {context.product_name}, not found in cart: "{product_name_in_cart}"'
 
 
 @then('Verify cart has {amount} item')
@@ -24,3 +24,7 @@ def verify_cart_items(context, amount):
 @then("Verify 'Your cart is empty' message is shown")
 def verify_cart_empty(context):
     context.app.cart_page.verify_cart_empty()
+
+@then("Verify cart page opened")
+def verify_cart_opened(context):
+    context.app.cart_page.verify_cart_opened()
