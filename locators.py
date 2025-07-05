@@ -5,20 +5,17 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from time import sleep
 
-# get the path to the ChromeDriver executable
-driver_path = ChromeDriverManager().install()
-
-# create a new Chrome browser instance
-service = Service(driver_path)
-driver = webdriver.Chrome(service=service)
+driver = webdriver.Chrome()
 driver.maximize_window()
 
 # open the url
 driver.get('https://www.amazon.com/')
-driver.refresh()
-sleep(10)
+driver.find_element(By.XPATH,'//*[@class="a-button-text"]').click()
+driver.find_element(By.XPATH, '//div[@id="nav-link-accountList"]').click()
+sleep(5)
 
-#Locators:
+#Locators + Search strategy for Amazon Sign in page
+
 #Amazon logo, search by XPATH
 driver.find_element(By.XPATH,"//i[@aria-label='Amazon']")
 
@@ -29,25 +26,18 @@ driver.find_element(By.ID,"ap_email_login")
 driver.find_element(By.XPATH,"//input[@class='a-button-input']")
 
 #Conditions of use link,search by text
-driver.find_element(By.XPATH,"//a[text()='Conditions of Use']")
+driver.find_element(By.XPATH,"//a[contains(@href, 'ap_signin_notification_condition_of_use')]")
 
 #Privacy notice link,search by text
-driver.find_element(By.XPATH,"//a[text()='Privacy Notice']")
+driver.find_element(By.XPATH,"//a[contains(@href, 'ap_signin_notification_privacy_notice')]")
 
 #Need help link,search by XPATH
-driver.find_element(By.XPATH,"//a[@href='/gp/help/customer/account-issues/ref=unified_claim_collection?ie=UTF8']")
-
-#Forgot your password link,search by XPATH
-driver.find_element(By.XPATH,"//option[@name='I forgot my password']")
-
-#Password reset page link,search by text
-driver.find_element(By.XPATH,"//a[text()='Password reset page']")
+driver.find_element(By.XPATH,"//a[contains(@href, '/gp/help/customer/account')]")
 
 #Create account page link,search by text
-driver.find_element(By.XPATH,"//a[text()='Create Account page']")
+driver.find_element(By.XPATH,"//a[@id='ab-registration-ingress-link']")
 
-#Create account button,search by XPATH
-driver.find_element(By.XPATH,"//a[@class='a-link-normal']")
+
 
 
 
