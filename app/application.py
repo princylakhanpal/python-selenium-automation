@@ -7,6 +7,7 @@ from pages.search_results_page import SearchResultsPage
 from pages.cart_page import Cartpage
 from pages.sign_in_page import SignInPage
 from pages.side_navigation_cart import SideNavigationCart
+from pages.target_terms_condns import TargetTermsCondns
 
 
 class Application:
@@ -18,3 +19,4 @@ class Application:
         self.cart_page = Cartpage(driver)
         self.sign_in_page = SignInPage(driver)
         self.side_navigation_cart = SideNavigationCart(driver)
+        self.target_terms_condns = TargetTermsCondns(driver)
